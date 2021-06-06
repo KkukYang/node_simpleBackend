@@ -1,0 +1,23 @@
+{
+  "name": "node-study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:pm2": "pm2 start index.js --watch",
+    "stop:pm2": "pm2 stop index.js",
+    "delete:pm2": "pm2 delete index.js",
+    "list:pm2": "pm2 list"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "pm2": "^4.5.6"
+  }
+}
