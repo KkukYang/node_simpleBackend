@@ -1,6 +1,14 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const fs = require("fs");
 const app = express();
+
+app.use(express.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 console.log("interval start");
 let num = 0;
@@ -9,7 +17,6 @@ setInterval(() => {
   console.log(num);
   num += 1;
 }, 1000);
-// https://www.w3schools.com/jsref/met_win_setinterval.asp
 
 app.get("/", (req, res) => {
   fs.readFile("index.html", (err, data) => {
@@ -20,19 +27,17 @@ app.get("/", (req, res) => {
     }
   });
 });
-// https://expressjs.com/ko/4x/api.html#res.end
 
-app.post("/num/post", function (req, res) {
-  console.log(req);
-  res.send("POST request to homepage");
+app.post("/num", function (req, res) {
+  console.log(req.body);
+  let resData = Object.assign(req.body, { num: num });
+  res.send(resData);
 });
-// https://expressjs.com/ko/4x/api.html#app.post.method
 
-app.get("/num/get", function (req, res) {
-  console.log(req);
-  res.send(`${num}`);
+app.get("/num", function (req, res) {
+  console.log(req.query.msg);
+  let resData = Object.assign(req.query, { num: num });
+  res.send(resData);
 });
 
 app.listen(3000);
-// express basic
-// https://www.npmjs.com/package/express

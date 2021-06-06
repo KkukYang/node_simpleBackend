@@ -8,13 +8,40 @@
     <title>Document</title>
     <script type="text/javascript">
       $(() => {
-        $(".btn").click((e) => {
+        // get 버튼이벤트
+        $(".btn_get").click((e) => {
+          // get 통신 request
           $.ajax({
-            url: "/num/get",
-            type: "get",
+            url: "/num", // address
+            type: "GET", // method type
+            dataType: "json", // json 형식으로 받겠다.
+            data: {
+              msg: "get message",
+            },
+            success: (result) => {
+              //결과
+              console.log(result);
+              $(".inp_get").val(`${result.num} ${result.msg}`);
+            },
+            error: (err) => {
+              console.log(err);
+            },
+          });
+        });
+
+        // post 버튼이벤트
+        $(".btn_post").click((e) => {
+          // post 통신 request
+          $.ajax({
+            url: "/num",
+            type: "POST",
+            dataType: "json",
+            data: {
+              msg: "post message",
+            },
             success: (result) => {
               console.log(result);
-              $(".inp").val(result);
+              $(".inp_post").val(`${result.num} ${result.msg}`);
             },
             error: (err) => {
               console.log(err);
@@ -25,10 +52,12 @@
     </script>
   </head>
   <body>
-    aaa
-    <!-- <form action="/num/get" method="GET"> -->
-    <input class="inp" type="text" value="num" />
-    <button class="btn">get num</button>
-    <!-- </form> -->
+    get
+    <input class="inp_get" type="text" value="num" readonly /><br />
+    post
+    <input class="inp_post" type="text" value="num" readonly /><br />
+
+    <button class="btn_get">get</button>
+    <button class="btn_post">post</button>
   </body>
 </html>
