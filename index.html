@@ -24,6 +24,9 @@
             // 요청이 완료되면
             if (xhr.status === 200 || xhr.status === 201) {
               console.log(xhr.responseText);
+              var result = JSON.parse(xhr.responseText);
+              var input = document.getElementsByClassName("inp_get")[0];
+              input.value = `${result.num} ${result.msg}`;
             } else {
               console.error(xhr.responseText);
             }
@@ -41,6 +44,9 @@
             // 요청이 완료되면
             if (xhr.status === 200 || xhr.status === 201) {
               console.log(xhr.responseText);
+              var result = JSON.parse(xhr.responseText);
+              var input = document.getElementsByClassName("inp_post")[0];
+              input.value = `${result.num} ${result.msg}`;
             } else {
               console.error(xhr.responseText);
             }
