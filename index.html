@@ -4,52 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>Document</title>
-    <script type="text/javascript">
-      $(() => {
-        // get 버튼이벤트
-        $(".btn_get").click((e) => {
-          // get 통신 request
-          $.ajax({
-            url: "/num", // address
-            type: "GET", // method type
-            dataType: "json", // json 형식으로 받겠다.
-            data: {
-              msg: "get message",
-            },
-            success: (result) => {
-              //결과
-              console.log(result);
-              $(".inp_get").val(`${result.num} ${result.msg}`);
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
-        });
-
-        // post 버튼이벤트
-        $(".btn_post").click((e) => {
-          // post 통신 request
-          $.ajax({
-            url: "/num",
-            type: "POST",
-            dataType: "json",
-            data: {
-              msg: "post message",
-            },
-            success: (result) => {
-              console.log(result);
-              $(".inp_post").val(`${result.num} ${result.msg}`);
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
-        });
-      });
-    </script>
   </head>
   <body>
     get
@@ -57,7 +12,48 @@
     post
     <input class="inp_post" type="text" value="num" readonly /><br />
 
-    <button class="btn_get">get</button>
-    <button class="btn_post">post</button>
+    <button class="btn_get" onclick="onGetButton()">get</button>
+    <button class="btn_post" onclick="onPostButton()">post</button>
+
+    <script type="text/javascript">
+      function onGetButton() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          // 요청에 대한 콜백
+          if (xhr.readyState === xhr.DONE) {
+            // 요청이 완료되면
+            if (xhr.status === 200 || xhr.status === 201) {
+              console.log(xhr.responseText);
+            } else {
+              console.error(xhr.responseText);
+            }
+          }
+        };
+        xhr.open("GET", "/num?msg=get message"); // 메소드와 주소 설정
+        xhr.send(); // 요청 전송
+      }
+
+      function onPostButton() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          // 요청에 대한 콜백
+          if (xhr.readyState === xhr.DONE) {
+            // 요청이 완료되면
+            if (xhr.status === 200 || xhr.status === 201) {
+              console.log(xhr.responseText);
+            } else {
+              console.error(xhr.responseText);
+            }
+          }
+        };
+        xhr.open("POST", "/num"); // 메소드와 주소 설정
+        xhr.setRequestHeader("Content-Type", "application/json"); // 컨텐츠타입을 json으로
+        xhr.send(
+          JSON.stringify({
+            msg: "post message",
+          })
+        ); // 요청 전송
+      }
+    </script>
   </body>
 </html>

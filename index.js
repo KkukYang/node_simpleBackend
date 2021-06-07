@@ -1,11 +1,10 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const fs = require("fs");
 const app = express();
 
 app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 );
@@ -35,7 +34,7 @@ app.post("/num", function (req, res) {
 });
 
 app.get("/num", function (req, res) {
-  console.log(req.query.msg);
+  console.log(req.query);
   let resData = Object.assign(req.query, { num: num });
   res.send(resData);
 });
